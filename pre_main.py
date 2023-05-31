@@ -34,7 +34,7 @@ if __name__ == '__main__':
                                             batch_size=256,
                                             num_workers=2,aug=False)
 
-    loss,val_acc, test_acc = pre_train(model,optimizer,criterion,batchsize, epoch,trainset,test_data,scheduler)
+    loss,val_acc, test_acc = pre_train(model,optimizer,criterion,batchsize,200,trainset,test_data,scheduler)
     data = {'loss':loss,'val_acc':val_acc,'test_acc':test_acc}
     torch.save(data,'./datas/baseline.pth')
 

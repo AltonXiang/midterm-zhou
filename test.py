@@ -20,7 +20,7 @@ if __name__ == '__main__':
         model = ResNet_mine(Bottleneck, [12, 12, 12], num_classes=100)
         model.load_state_dict(torch.load(args.src))
     else:
-        model = ResNet18_mine(BasicBlock, [2, 2, 2, 2], num_classes=100)
+        model = ResNet18_mine()
         model.load_state_dict(torch.load(args.src))
 
     device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')

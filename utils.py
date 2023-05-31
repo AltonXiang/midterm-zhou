@@ -7,22 +7,9 @@ from torchvision import datasets, transforms, models
 from torchvision.transforms.functional import InterpolationMode
 import torch.nn.parallel
 
-def dataloading(mean, std, dataset="CIFAR100", batch_size=128, num_workers=16, resize=False,aug=True):
+def dataloading(mean, std, dataset="CIFAR100", batch_size=128, num_workers=16, aug=True):
     normalize = transforms.Normalize(mean=mean, std=std)
-    if resize:
-        transform_train = transforms.Compose([
-            # transforms.RandomCrop(32, padding=4),
-            transforms.Resize((224, 224), interpolation=InterpolationMode.BICUBIC),
-            transforms.RandomHorizontalFlip(),
-            transforms.ToTensor(),
-            normalize
-        ])
-        transform_test = transforms.Compose([
-            transforms.Resize((224, 224), interpolation=InterpolationMode.BICUBIC),
-            transforms.ToTensor(),
-            normalize
-        ])
-    else:
+    if aug:
         transform_train = transforms.Compose([
             transforms.RandomCrop(32, padding=4),
             transforms.RandomHorizontalFlip(),
@@ -33,7 +20,7 @@ def dataloading(mean, std, dataset="CIFAR100", batch_size=128, num_workers=16, r
             transforms.ToTensor(),
             normalize
         ])
-    if aug:
+    else:
         transform_train = transforms.Compose([
             transforms.ToTensor(),
             normalize
@@ -41,7 +28,8 @@ def dataloading(mean, std, dataset="CIFAR100", batch_size=128, num_workers=16, r
         transform_test = transforms.Compose([
             transforms.ToTensor(),
             normalize
-        ])        
+        ])
+      
 
     if dataset=="CIFAR100":
         trainset = datasets.CIFAR100(root='./data', train=True, download=False, transform=transform_train)
@@ -231,7 +219,7 @@ def test(test_data, net, criterion, epoch, verbose=True):
             #loss = loss / len(test_data.dataset)
             temp_loss.update(loss.item(), inputs.shape[0]) 
     if verbose:
-        print('epoch: %d, test loss: %.3f, test accuracy: %.2f' % (epoch, temp_loss.avg, temp_correct.avg))
+        print('epoch: %d, test loss: %f, test accuracy: %f' % (epoch, temp_loss.avg, temp_correct.avg))
     return temp_loss.avg, temp_correct.avg
 
 def rand_bbox(size, lam):

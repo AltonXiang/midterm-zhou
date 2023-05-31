@@ -23,6 +23,8 @@ python main.py --aug_type mixup --save_path ./models/mixup.pth
 
 模型请于此处下载：链接：https://pan.baidu.com/s/1a6bMq9tDNH7FMOyPO6P8oA  提取码：oosl 
 
+下载之后保存在./models
+
 ### Step4：比较三种数据增强以及baseline的性能
 
 ```
