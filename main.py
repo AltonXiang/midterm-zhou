@@ -96,7 +96,6 @@ if __name__ == '__main__':
 					for param_group in optimizer.param_groups:
 						param_group['lr'] = param_group['lr'] * 0.1
 		
-			# print('Mock(1)')
 			for param_group in optimizer.param_groups:
 				print(param_group['lr'])
 		
@@ -109,20 +108,17 @@ if __name__ == '__main__':
 											args.beta, 
 											aug_type=args.aug_type, 
 											verbose=args.verbose)	
-			# train_loss.append((temp_loss/len(train_data.dataset)).item())
-			# train_acc.append((temp_correct/len(train_data.dataset)).item())
+
 			train_writer.add_scalar(args.tensorboard_label + 'Loss', temp_loss, epoch_counter + 1)
 			train_writer.add_scalar(args.tensorboard_label + 'Acc', temp_correct, epoch_counter + 1)
-			# print(net.offset.grad)
-			# print(net.mask.grad)
+
 			
 			temp_loss, temp_correct = test(test_data, 
 											net, 
 											criterion, 
 											epoch_counter + 1,
 											verbose=args.verbose)
-			# test_loss.append((temp_loss/len(test_data)).item())
-			# test_acc.append((temp_correct/10000).item())
+
 			test_writer.add_scalar(args.tensorboard_label + 'Loss', temp_loss, epoch_counter + 1)
 			test_writer.add_scalar(args.tensorboard_label + 'Acc', temp_correct, epoch_counter + 1)
 			
